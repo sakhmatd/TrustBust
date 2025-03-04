@@ -156,6 +156,8 @@ void Error_Handler(void);
 #define OCTOSPI_R_IO3_GPIO_Port GPIOF
 #define MIC_SDINx_Pin GPIO_PIN_10
 #define MIC_SDINx_GPIO_Port GPIOE
+#define ENCRYPT_Pin GPIO_PIN_1
+#define ENCRYPT_GPIO_Port GPIOC
 #define MIC_CCK0_Pin GPIO_PIN_9
 #define MIC_CCK0_GPIO_Port GPIOE
 #define OCTOSPI_R_IO6_Pin GPIO_PIN_3
