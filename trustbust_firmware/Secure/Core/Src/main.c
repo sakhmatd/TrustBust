@@ -1011,6 +1011,13 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+uint8_t SubKeys(uint8_t plain, uint8_t key)
+{
+	uint8_t ret = 0;
+	ret = s_box[plain ^ key];
+	return ret;
+}
+
 void HAL_SYSTICK_Callback(void)
 {
   if (TimingDelay != 0U)
@@ -1021,6 +1028,9 @@ void HAL_SYSTICK_Callback(void)
   {
     /* Ready pin on */
     HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_1);
+
+    volatile uint8_t enc_data = 0;
+    enc_data = SubKeys(plaintext, aes_key);
 
     /* Reset the delay */
     TimingDelay = ENC_DELAY;
