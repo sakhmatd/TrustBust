@@ -46,7 +46,6 @@
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-static void MX_GTZC_NS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -76,9 +75,6 @@ int main(void)
 
   /* USER CODE END Init */
 
-  /* GTZC initialisation */
-  MX_GTZC_NS_Init();
-
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
@@ -97,27 +93,6 @@ int main(void)
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
-}
-
-/**
-  * @brief GTZC_NS Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GTZC_NS_Init(void)
-{
-
-  /* USER CODE BEGIN GTZC_NS_Init 0 */
-
-  /* USER CODE END GTZC_NS_Init 0 */
-
-  /* USER CODE BEGIN GTZC_NS_Init 1 */
-
-  /* USER CODE END GTZC_NS_Init 1 */
-  /* USER CODE BEGIN GTZC_NS_Init 2 */
-
-  /* USER CODE END GTZC_NS_Init 2 */
-
 }
 
 /* USER CODE BEGIN 4 */

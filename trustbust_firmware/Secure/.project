@@ -91,26 +91,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_icache.c</locationURI>
 		</link>
 		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_hal_mdf.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_mdf.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_hal_ospi.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_ospi.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_hal_pcd.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_pcd.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_hal_pcd_ex.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_pcd_ex.c</locationURI>
-		</link>
-		<link>
 			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_hal_pwr.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_pwr.c</locationURI>
@@ -131,16 +111,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rcc_ex.c</locationURI>
 		</link>
 		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_hal_spi.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_spi.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_hal_spi_ex.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_spi_ex.c</locationURI>
-		</link>
-		<link>
 			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_hal_uart.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_uart.c</locationURI>
@@ -149,46 +119,6 @@
 			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_hal_uart_ex.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_uart_ex.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_ll_dlyb.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_dlyb.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_ll_dma.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_dma.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_ll_exti.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_exti.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_ll_gpio.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_gpio.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_ll_lpgpio.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_lpgpio.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_ll_ucpd.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_ucpd.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_ll_usb.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_usb.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_ll_utils.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_utils.c</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

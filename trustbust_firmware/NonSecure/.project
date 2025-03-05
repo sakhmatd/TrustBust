@@ -111,15 +111,5 @@
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rcc_ex.c</locationURI>
 		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_ll_exti.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_exti.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32U5xx_HAL_Driver/stm32u5xx_ll_utils.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_utils.c</locationURI>
-		</link>
 	</linkedResources>
 </projectDescription>
