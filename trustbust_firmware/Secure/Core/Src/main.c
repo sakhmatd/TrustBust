@@ -32,7 +32,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define ENC_DELAY 500U /* Run encryption every 0.5s */
-#define NUM_ROUNDS 10U /* Number of times to run */
+#define NUM_ROUNDS 16U /* Number of times to run */
 #define TXT_SIZE 16
 
 /* Non-secure Vector table to jump to (internal Flash Bank2 here)             */
@@ -55,7 +55,7 @@ UART_HandleTypeDef huart3;
 static uint32_t TimingDelay = ENC_DELAY;
 static uint8_t rounds = NUM_ROUNDS;
 //static uint8_t plaintext = 0xAA;
-static uint8_t *plaintext = "extraterrestrial";
+static uint8_t plaintext[16] = {0};
 static uint8_t aes_key = 0x33;
 
 /* Rijndael's S-Box */
@@ -460,34 +460,38 @@ uint8_t SubKeys(uint8_t plain, uint8_t key)
 
 void HAL_SYSTICK_Callback(void)
 {
-  /* No need to run if we are done, maybe raise a flag */
-  if (rounds-- <= 0)
-	return;
-
-  if (TimingDelay != 0U)
-  {
-    TimingDelay--;
-  }
-  else
-  {
-	uint8_t enc_data[TXT_SIZE + 1] = {0};
-
-    /* Ready pin on */
-	HAL_GPIO_WritePin(ENCRYPT_GPIO_Port, ENCRYPT_Pin, GPIO_PIN_SET);
-
 	uint8_t i = 0;
-	for (; i < TXT_SIZE; i++) {
-		enc_data[i] = SubKeys(plaintext[i], aes_key);
+	uint8_t j = 0;
 
+	if (rounds-- <= 0U) {
+		rounds = NUM_ROUNDS;
+		for (i = 0; i < TXT_SIZE; i++)
+			plaintext[i] += 1;
 	}
-	/* Send encrypted string via UART */
-	HAL_UART_Transmit(&huart3, enc_data, sizeof(uint8_t) * (TXT_SIZE + 1), 100);
 
-	/* Reset the delay */
-	TimingDelay = ENC_DELAY;
 
-    /* Ready pin off */
-    HAL_GPIO_WritePin(ENCRYPT_GPIO_Port, ENCRYPT_Pin, GPIO_PIN_RESET);
+	if (TimingDelay != 0U)
+	{
+		TimingDelay--;
+	}
+	else
+	{
+		uint8_t enc_data[TXT_SIZE + 1] = {0};
+
+		/* Ready pin on */
+		HAL_GPIO_WritePin(ENCRYPT_GPIO_Port, ENCRYPT_Pin, GPIO_PIN_SET);
+
+		for (; i < TXT_SIZE; i++) {
+			enc_data[i] = SubKeys(plaintext[i], aes_key);
+		}
+		/* Send encrypted string via UART */
+		HAL_UART_Transmit(&huart3, enc_data, sizeof(uint8_t) * (TXT_SIZE + 1), 100);
+
+		/* Reset the delay */
+		TimingDelay = ENC_DELAY;
+
+		/* Ready pin off */
+		HAL_GPIO_WritePin(ENCRYPT_GPIO_Port, ENCRYPT_Pin, GPIO_PIN_RESET);
   }
 }
 /* USER CODE END 4 */
