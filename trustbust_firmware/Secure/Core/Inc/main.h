@@ -75,6 +75,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define NEXT_BTN_Pin GPIO_PIN_13
+#define NEXT_BTN_GPIO_Port GPIOC
 #define ENCRYPT_Pin GPIO_PIN_1
 #define ENCRYPT_GPIO_Port GPIOC
 

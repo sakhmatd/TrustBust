@@ -125,6 +125,7 @@ while (plaintext < 255):
 
     plaintext += 1
     file.close()
+    input("Press user button on the board to change plaintext, then Enter to continue...")
 
 # Close the connection
 scope.close()

@@ -53,8 +53,8 @@ UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
 static uint32_t TimingDelay = ENC_DELAY;
-static uint8_t rounds = NUM_ROUNDS;
-//static uint8_t plaintext = 0xAA;
+//static uint8_t rounds = NUM_ROUNDS;
+//static uint8_t plaintext = 0x00;
 static uint8_t plaintext[16] = {0};
 static uint8_t aes_key = 0x33;
 
@@ -439,12 +439,25 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(ENCRYPT_GPIO_Port, ENCRYPT_Pin, GPIO_PIN_RESET);
 
+  /*Configure the EXTI line attribute */
+  HAL_EXTI_ConfigLineAttributes(EXTI_LINE_13, EXTI_LINE_SEC);
+
+  /*Configure GPIO pin : NEXT_BTN_Pin */
+  GPIO_InitStruct.Pin = NEXT_BTN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(NEXT_BTN_GPIO_Port, &GPIO_InitStruct);
+
   /*Configure GPIO pin : ENCRYPT_Pin */
   GPIO_InitStruct.Pin = ENCRYPT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(ENCRYPT_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI13_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI13_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -461,14 +474,15 @@ uint8_t SubKeys(uint8_t plain, uint8_t key)
 void HAL_SYSTICK_Callback(void)
 {
 	uint8_t i = 0;
-	uint8_t j = 0;
+	//uint8_t j = 0;
 
+	/*
 	if (rounds-- <= 0U) {
 		rounds = NUM_ROUNDS;
 		for (i = 0; i < TXT_SIZE; i++)
 			plaintext[i] += 1;
 	}
-
+	*/
 
 	if (TimingDelay != 0U)
 	{
@@ -477,6 +491,7 @@ void HAL_SYSTICK_Callback(void)
 	else
 	{
 		uint8_t enc_data[TXT_SIZE + 1] = {0};
+		//uint8_t enc_data = 0;
 
 		/* Ready pin on */
 		HAL_GPIO_WritePin(ENCRYPT_GPIO_Port, ENCRYPT_Pin, GPIO_PIN_SET);
@@ -484,8 +499,12 @@ void HAL_SYSTICK_Callback(void)
 		for (; i < TXT_SIZE; i++) {
 			enc_data[i] = SubKeys(plaintext[i], aes_key);
 		}
+
+		//enc_data = SubKeys(plaintext, aes_key);
+
 		/* Send encrypted string via UART */
 		HAL_UART_Transmit(&huart3, enc_data, sizeof(uint8_t) * (TXT_SIZE + 1), 100);
+		//HAL_UART_Transmit(&huart3, &enc_data, sizeof(uint8_t), 100);
 
 		/* Reset the delay */
 		TimingDelay = ENC_DELAY;
@@ -493,6 +512,17 @@ void HAL_SYSTICK_Callback(void)
 		/* Ready pin off */
 		HAL_GPIO_WritePin(ENCRYPT_GPIO_Port, ENCRYPT_Pin, GPIO_PIN_RESET);
   }
+}
+
+/* Increase plaintext whenever a button is pressed */
+void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
+{
+	/* Increase plaintext when button pressed */
+	if (GPIO_Pin == NEXT_BTN_Pin) {
+		//plaintext++;
+		for (uint8_t i = 0; i < TXT_SIZE; i++)
+			plaintext[i] += 1;
+	}
 }
 /* USER CODE END 4 */
 
