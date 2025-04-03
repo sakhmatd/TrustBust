@@ -52,7 +52,7 @@ plaintext = 0
 
 
 # Loop for data collection
-while (plaintext < 255):
+while (plaintext <= 255):
     csv_filename = 'csv/trustbust_data_' + str(plaintext) + ".csv"
     file = open(csv_filename, mode='w', newline='')
     writer = csv.writer(file)
