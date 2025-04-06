@@ -48,7 +48,7 @@ scope.write(':TIM:DEL:SCAL 0.0002')
 # Normal acq mode, averages a bit weird to work with
 scope.write(':ACQ:TYPE NORM')
 
-plaintext = 28
+plaintext = 55
 
 
 # Loop for data collection
@@ -91,7 +91,7 @@ while (plaintext <= 255):
         waveform_values = np.fromstring(waveform_data, sep=',', dtype=np.float64)
         trigger_values  = np.fromstring(chan1_data, sep=',', dtype=np.float64)
         #with np.printoptions(threshold=sys.maxsize):
-        #    print(trigger_values)
+        #print(trigger_values)
         #print(waveform_values)
 
         # Fail-safe if for some reason we capture an empty screen
@@ -102,11 +102,12 @@ while (plaintext <= 255):
 
         # Mask off values where encryption is not active
         mask = trigger_values >= 2.0
-        waveform_values = trigger_values[mask]
+        waveform_values = waveform_values[mask]
         #print(waveform_values)
         if (waveform_values.size < 700):
             print("Drift detected, retrying...")
             continue
+        #print(waveform_values)
         sample_data.append(waveform_values)
 
         print(f"Captured data at {time.time()}")
