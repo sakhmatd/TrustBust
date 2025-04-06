@@ -48,7 +48,7 @@ scope.write(':TIM:DEL:SCAL 0.0002')
 # Normal acq mode, averages a bit weird to work with
 scope.write(':ACQ:TYPE NORM')
 
-plaintext = 35
+plaintext = 28
 
 
 # Loop for data collection
