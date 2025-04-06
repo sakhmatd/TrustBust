@@ -31,7 +31,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ENC_DELAY 500U /* Run encryption every 0.5s */
+#define ENC_DELAY 100U /* Run encryption every 0.5s */
 #define NUM_ROUNDS 16U /* Number of times to run */
 #define TXT_SIZE 16
 
@@ -56,7 +56,7 @@ static uint32_t TimingDelay = ENC_DELAY;
 //static uint8_t rounds = NUM_ROUNDS;
 //static uint8_t plaintext = 0x00;
 static uint8_t plaintext[16] = {0};
-static uint8_t aes_key = 0x33;
+static uint8_t aes_key = 0xAA;
 
 /* Rijndael's S-Box */
 static uint8_t s_box[256] =

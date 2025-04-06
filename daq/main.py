@@ -48,7 +48,7 @@ scope.write(':TIM:DEL:SCAL 0.0002')
 # Normal acq mode, averages a bit weird to work with
 scope.write(':ACQ:TYPE NORM')
 
-plaintext = 0
+plaintext = 35
 
 
 # Loop for data collection
@@ -104,6 +104,9 @@ while (plaintext <= 255):
         mask = trigger_values >= 2.0
         waveform_values = trigger_values[mask]
         #print(waveform_values)
+        if (waveform_values.size < 700):
+            print("Drift detected, retrying...")
+            continue
         sample_data.append(waveform_values)
 
         print(f"Captured data at {time.time()}")
