@@ -1,4 +1,5 @@
 import pyvisa
+import serial
 import numpy as np
 import sys
 import csv
@@ -15,9 +16,10 @@ if not resources:
     print("Could not find a scope!")
     exit(-1)
 
+print(resources)
 # Assume that the first thing in the list is the scope
 # Not the best thing to do, but okay for now
-scope = rm.open_resource(resources[0])
+scope = rm.open_resource(resources[-1])
 
 # Try to query the scope ID to make sure we are connected
 idn = scope.query("*IDN?")
@@ -48,15 +50,22 @@ scope.write(':TIM:DEL:SCAL 0.0002')
 # Normal acq mode, averages a bit weird to work with
 scope.write(':ACQ:TYPE NORM')
 
-plaintext = 55
+plaintext = int(sys.argv[1]) if len(sys.argv) > 1 else 0
+#plaintext = 93
 
+print("Connecting to serial...")
+serial = serial.Serial(
+     port="/dev/ttyUSB0", baudrate=115200, bytesize=8, timeout=2, stopbits=serial.STOPBITS_ONE
+)
 
 # Loop for data collection
 while (plaintext <= 255):
     csv_filename = 'csv/trustbust_data_' + str(plaintext) + ".csv"
     file = open(csv_filename, mode='w', newline='')
     writer = csv.writer(file)
+    print("######################################")
     print(f"Begin capture for text: {plaintext}.")
+    print("######################################")
 
     sample = 0
     sample_data = []
@@ -65,9 +74,11 @@ while (plaintext <= 255):
         # Stop the scope, set to single mode
         scope.write(':SING')
         # Wait for trigger
+
         rdy = ""
         # No clue why the status has a newline attached
         while (rdy != "STOP\n"):
+            serial.write(bytes([plaintext]))
             rdy = scope.query(':TRIG:STAT?')  # I hate Python so much
 
         # Query the waveform data from channel 2
@@ -104,7 +115,7 @@ while (plaintext <= 255):
         mask = trigger_values >= 2.0
         waveform_values = waveform_values[mask]
         #print(waveform_values)
-        if (waveform_values.size < 700):
+        if (waveform_values.size < 100):
             print("Drift detected, retrying...")
             continue
         #print(waveform_values)
@@ -129,7 +140,7 @@ while (plaintext <= 255):
 
     plaintext += 1
     file.close()
-    input("Press user button on the board to change plaintext, then Enter to continue...")
+    #input("Press user button on the board to change plaintext, then Enter to continue...")
 
 # Close the connection
 scope.close()

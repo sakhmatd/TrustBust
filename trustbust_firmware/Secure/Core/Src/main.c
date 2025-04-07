@@ -493,18 +493,25 @@ void HAL_SYSTICK_Callback(void)
 		uint8_t enc_data[TXT_SIZE + 1] = {0};
 		//uint8_t enc_data = 0;
 
+		uint8_t plain = 0;
+		HAL_UART_Receive(&huart3, &plain, sizeof(uint8_t), 10000);
+//		HAL_UART_Transmit(&huart3, ack_str, sizeof(char) * 4, 10000);
+//		uint8_t ptext[TXT_SIZE] = {0}
+
 		/* Ready pin on */
 		HAL_GPIO_WritePin(ENCRYPT_GPIO_Port, ENCRYPT_Pin, GPIO_PIN_SET);
 
 		for (; i < TXT_SIZE; i++) {
-			enc_data[i] = SubKeys(plaintext[i], aes_key);
+			//enc_data[i] = SubKeys(plaintext[i], aes_key);
+			enc_data[i] = SubKeys(plain, aes_key);
 		}
 
 		//enc_data = SubKeys(plaintext, aes_key);
-
+		//char *hello = "hello\n";
 		/* Send encrypted string via UART */
-		HAL_UART_Transmit(&huart3, enc_data, sizeof(uint8_t) * (TXT_SIZE + 1), 100);
+		//HAL_UART_Transmit(&huart3, enc_data, sizeof(uint8_t) * (TXT_SIZE + 1), 100);
 		//HAL_UART_Transmit(&huart3, &enc_data, sizeof(uint8_t), 100);
+		//HAL_UART_Transmit(&huart3, hello, sizeof(char) * 7, 100);
 
 		/* Reset the delay */
 		TimingDelay = ENC_DELAY;
