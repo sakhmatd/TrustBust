@@ -1,7 +1,7 @@
 import csv
-import scipy.stats as spicy
+
 import matplotlib.pyplot as plt
-import numpy as np
+
 
 Sbox = (
         0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76,
@@ -23,42 +23,52 @@ Sbox = (
         )
 
 trace_data = {} 
-
-max = {}
-wd = {}
+maxd = []
 
 for x in range(256):
-    with open(f"csv-full-s/trustbust_data_{x}.csv", mode='r', newline='') as f:
+    with open(f"csv-full-ns/trustbust_data_{x}.csv", mode='r', newline='') as f:
         trace_data[x] = [float(r[0]) for r in csv.reader(f)]
 
-for KeyGuess in range(256):
-    hammingPower = [bin(Sbox[plainText ^ KeyGuess]).count('1') for plainText in range(256)]
-    hammingPower = [float(h) for h in hammingPower]
-    val = 0
-    w = []
-    for p in range(1,470):
-        actualPower = [float(trace_data[trace][p]) for trace in trace_data]
-        l = spicy.pearsonr(actualPower, hammingPower).statistic
-        w.append(l)
-        if l > val:
-            val = l
-    plt.plot(w, label=f'KeyGuess {KeyGuess}')
-    wd[KeyGuess] = w
-    max[KeyGuess] = val
+for KeyGuess in range (256):
+    sub0 = []
+    sub1 = []
+    sz0 = 0
+    sz1 = 0
 
-dtype= [('kg',int), ('v', np.float64)]
-p = np.array(list(max.items()), dtype=dtype)
-p = np.sort(p, order='v')
+    for plainText in range (256):
+        sBox_lookup = Sbox[plainText ^  KeyGuess]
+        if sBox_lookup & 0b1 == 0b1:
+            if sz0 == 0:
+                sub0 = trace_data[plainText][1:539]
+            else:
+                sub0 = [a + b for a,b in zip(sub0, trace_data[plainText][1:539])]
+            
+            sz0+=1
+        else:
+            if sz1 == 0:
+                sub1 = trace_data[plainText][1:539]
+            else:
+                sub1 = [a + b for a,b in zip(sub1, trace_data[plainText][1:539])]
+            
+            sz1+=1
+    
+    # average
+    sub0 = [a/sz0 for a in sub0]
+    sub1 = [a/sz1 for a in sub1]
 
-with open('cpa.txt', 'w') as f:
-    for i in range(256):
-        f.write(f"{p[i][0]} {p[i][1]}\n")
+    p = [a - b for a,b in zip(sub0, sub1)]
+    plt.plot(p, label=f'KeyGuess {KeyGuess}')
+    maxd.append((KeyGuess, max(p)))
 
-# Finalize and save the plot
+maxd = sorted(maxd, key=lambda x: x[1], reverse=True)
+
+with open('dpa.txt', 'w') as f:
+    for k, v in maxd:
+        f.write(f'{k}: {v}\n')
+
 plt.xlabel('Sample Point')
-plt.ylabel('Pearson Correlation')
-plt.title('S CPA Correlation per Key Guess')
+plt.ylabel('Difference of Means')
+plt.title('NS DPA Correlation per Key Guess')
 plt.grid(True)
-#plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize='xx-small', ncol=3)  # Legend on the side
-plt.savefig('cpa-s.png', dpi=300)
+plt.savefig('dpa-ns.png', dpi=300)
 plt.show()
