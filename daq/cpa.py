@@ -28,7 +28,7 @@ max = {}
 wd = {}
 
 for x in range(256):
-    with open(f"csv-full-ns/trustbust_data_{x}.csv", mode='r', newline='') as f:
+    with open(f"csv-full-s/trustbust_data_{x}.csv", mode='r', newline='') as f:
         trace_data[x] = [float(r[0]) for r in csv.reader(f)]
 
 for KeyGuess in range(256):
@@ -36,7 +36,7 @@ for KeyGuess in range(256):
     hammingPower = [float(h) for h in hammingPower]
     val = 0
     w = []
-    for p in range(1,539):
+    for p in range(1,480):
         actualPower = [float(trace_data[trace][p]) for trace in trace_data]
         l = spicy.pearsonr(actualPower, hammingPower).statistic
         w.append(l)

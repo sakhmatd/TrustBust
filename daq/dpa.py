@@ -26,7 +26,7 @@ trace_data = {}
 maxd = []
 
 for x in range(256):
-    with open(f"csv-full-ns/trustbust_data_{x}.csv", mode='r', newline='') as f:
+    with open(f"csv-full-s/trustbust_data_{x}.csv", mode='r', newline='') as f:
         trace_data[x] = [float(r[0]) for r in csv.reader(f)]
 
 for KeyGuess in range (256):
@@ -36,20 +36,20 @@ for KeyGuess in range (256):
     sz1 = 0
 
     for plainText in range (256):
-        sBox_lookup = Sbox[plainText ^  KeyGuess]
+        sBox_lookup = Sbox[plainText ^ KeyGuess]
         if sBox_lookup & 0b1 == 0b1:
             if sz0 == 0:
-                sub0 = trace_data[plainText][1:539]
+                sub0 = trace_data[plainText][1:480]
             else:
-                sub0 = [a + b for a,b in zip(sub0, trace_data[plainText][1:539])]
-            
+                sub0 = [a + b for a,b in zip(sub0, trace_data[plainText][1:480])]
+
             sz0+=1
         else:
             if sz1 == 0:
-                sub1 = trace_data[plainText][1:539]
+                sub1 = trace_data[plainText][1:480]
             else:
-                sub1 = [a + b for a,b in zip(sub1, trace_data[plainText][1:539])]
-            
+                sub1 = [a + b for a,b in zip(sub1, trace_data[plainText][1:480])]
+
             sz1+=1
     
     # average
