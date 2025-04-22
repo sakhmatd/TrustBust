@@ -28,7 +28,7 @@ max = {}
 wd = {}
 
 for x in range(256):
-    with open(f"csv-full-s/trustbust_data_{x}.csv", mode='r', newline='') as f:
+    with open(f"csv-full-ns/trustbust_data_{x}.csv", mode='r', newline='') as f:
         trace_data[x] = [float(r[0]) for r in csv.reader(f)]
 
 for KeyGuess in range(256):
@@ -36,13 +36,14 @@ for KeyGuess in range(256):
     hammingPower = [float(h) for h in hammingPower]
     val = 0
     w = []
-    for p in range(1,470):
+    for p in range(1,539):
         actualPower = [float(trace_data[trace][p]) for trace in trace_data]
         l = spicy.pearsonr(actualPower, hammingPower).statistic
         w.append(l)
         if l > val:
             val = l
-    plt.plot(w, label=f'KeyGuess {KeyGuess}')
+    if KeyGuess == 170:
+        plt.plot(w, label=f'KeyGuess {KeyGuess}')
     wd[KeyGuess] = w
     max[KeyGuess] = val
 
@@ -57,8 +58,10 @@ with open('cpa.txt', 'w') as f:
 # Finalize and save the plot
 plt.xlabel('Sample Point')
 plt.ylabel('Pearson Correlation')
-plt.title('S CPA Correlation per Key Guess')
+plt.title('NS CPA Correlation for Correct Key Guess 170')
 plt.grid(True)
 #plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize='xx-small', ncol=3)  # Legend on the side
-plt.savefig('cpa-s.png', dpi=300)
+plt.subplots_adjust(left=0.2, right=0.8)
+plt.legend(loc='upper left', bbox_to_anchor=(1, 2), ncol=2, fontsize='small')
+plt.savefig('cpa-k-ns.png', dpi=300)
 plt.show()

@@ -57,7 +57,7 @@ for KeyGuess in range (256):
     sub1 = [a/sz1 for a in sub1]
 
     p = [a - b for a,b in zip(sub0, sub1)]
-    plt.plot(p, label=f'KeyGuess {KeyGuess}')
+    if(KeyGuess == 170): plt.plot(p, label=f'KeyGuess {KeyGuess}')
     maxd.append((KeyGuess, max(p)))
 
 maxd = sorted(maxd, key=lambda x: x[1], reverse=True)
@@ -68,7 +68,9 @@ with open('dpa.txt', 'w') as f:
 
 plt.xlabel('Sample Point')
 plt.ylabel('Difference of Means')
-plt.title('NS DPA Correlation per Key Guess')
+plt.title('NS DPA Correlation for Correct Key Guess 170')
 plt.grid(True)
-plt.savefig('dpa-ns.png', dpi=300)
+plt.subplots_adjust(left=0.2, right=0.8)
+plt.legend(loc='upper left', bbox_to_anchor=(1, 2), ncol=2, fontsize='small')
+plt.savefig('dpa-k-ns.png', dpi=300)
 plt.show()
